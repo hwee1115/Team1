@@ -31,12 +31,18 @@ public class OhWonjae {
 				System.out.println("번호" +space +  "제목" + space+"내용"+space+"글쓴이"+ space+"조회");
 
 				System.out.println("--------------------------------------------");
-				for(int i=0; i< boardArray.length; i++)
+				//글이 없을때
+				if(boardArray[99][0]==null)
+				{
+					System.out.println("존재하는 글이 없습니다. 생성해 주세요.");
+				}
+				for(int i=0;i< boardArray.length; i++)
 				{
 					System.out.println(boardArray[i][0] +space +boardArray[i][1] + space+boardArray[i][2]+space+boardArray[i][3]+ space+boardArray[i][4]);
 					
 				}
 				//메뉴로
+				System.out.println("메뉴로 가시려면 엔터를 눌러주세요.");
 				s = scanner.nextLine();
 				if(s.equals("\n"))
 				{
@@ -45,27 +51,38 @@ public class OhWonjae {
 				break;
 
 			case 2:
-				// 번호
-				RecentNumber--;
-				boardArray[RecentNumber][0] =  ""+(MaxNumber - RecentNumber);
-				// 제목
-				System.out.print("제목: ");
-				s = scanner.nextLine();
-				boardArray[RecentNumber][1] =  ""+s;
+				//게시판 꽉 찼으면
+				if(RecentNumber<0)
+				{
+					System.out.println("게시판이 꽉 찼습니다. 일부 게시물을 삭제해 주세요.");
+				}
+				// 게시판 자리 있으면 생성
+				else
+				{
+					// 번호
+					RecentNumber--;
+					boardArray[RecentNumber][0] =  ""+(MaxNumber - RecentNumber);
+					// 제목
+					System.out.print("제목: ");
+					s = scanner.nextLine();
+					boardArray[RecentNumber][1] =  ""+s;
+					
+					// 내용
+					System.out.print("내용: ");
+					s = scanner.nextLine();
+					boardArray[RecentNumber][2] =  ""+s;
+					
+					// 글쓴이
+					System.out.print("글쓴이: ");
+					s = scanner.nextLine();
+					boardArray[RecentNumber][3] =  ""+s;
+					
+					// 조회수
+					boardArray[RecentNumber][4] =  ""+0;
+				}
 				
-				// 내용
-				System.out.print("내용: ");
-				s = scanner.nextLine();
-				boardArray[RecentNumber][2] =  ""+s;
-				
-				// 글쓴이
-				System.out.print("글쓴이: ");
-				s = scanner.nextLine();
-				boardArray[RecentNumber][3] =  ""+s;
-				
-				// 조회수
-				boardArray[RecentNumber][4] =  ""+0;
 				// 메뉴로
+				System.out.println("메뉴로 가시려면 엔터를 눌러주세요.");
 				s = scanner.nextLine();
 				if(s.equals("\n"))
 				{
@@ -74,20 +91,29 @@ public class OhWonjae {
 				break;
 
 			case 3:
-				
+				//번호확인
 				System.out.print("번호 ");
 				s = scanner.nextLine();
 				number = Integer.parseInt(s);
-				// 조회수 증가
-				int views = Integer.parseInt(boardArray[MaxNumber-number][4]);
-				views++;
-				boardArray[MaxNumber-number][4] = ""+views;
-					System.out.print("제목: ");
-					System.out.println(boardArray[MaxNumber-number][1]);
-					System.out.println(boardArray[MaxNumber-number][2]);
-					System.out.println(boardArray[MaxNumber-number][3]);
-					System.out.println(boardArray[MaxNumber-number][4]);
+				// 잘못된 넘버 
+				if(number<0 || number >99 ||boardArray[MaxNumber-number][0]==null )
+				{
+					System.out.println("잘못된 숫자이거나 해당 번호의 게시물이 존재하지 않습니다.");
+				}
+				// 제대로된 넘버면
+				else
+				{
+					// 조회수 증가
+					int views = Integer.parseInt(boardArray[MaxNumber-number][4]);
+					views++;
+					boardArray[MaxNumber-number][4] = ""+views;
+						System.out.println("번호 : " + boardArray[MaxNumber-number][1]);
+						System.out.println("제목 : " + boardArray[MaxNumber-number][2]);
+						System.out.println("내용 : " + boardArray[MaxNumber-number][3]);
+						System.out.println("조회수 : " + boardArray[MaxNumber-number][4]);
+				}
 					// 메뉴로
+					System.out.println("메뉴로 가시려면 엔터를 눌러주세요.");
 					s = scanner.nextLine();
 					if(s.equals("\n"))
 					{
@@ -100,38 +126,49 @@ public class OhWonjae {
 				System.out.print("번호 ");
 				s = scanner.nextLine();
 				number = Integer.parseInt(s);
-				System.out.print("기존제목: ");
-				String pretitle = boardArray[MaxNumber-number][1];
-				System.out.println(pretitle);
-				System.out.print("수정제목: ");
-				s = scanner.nextLine();
-				System.out.println(s);
-				// 바로 엔터 누른거 아니면 해당내용으로 수정
-				if(s.equals(""))
+				// 잘못된 넘버 
+				if(number<0 || number >99 ||boardArray[MaxNumber-number][0]==null )
 				{
-					boardArray[MaxNumber-number][1] = pretitle;
+					System.out.println("잘못된 숫자이거나 해당 번호의 게시물이 존재하지 않습니다.");
 				}
+				// 제대로된 넘버면
 				else
 				{
-					boardArray[MaxNumber-number][1] = s;
+					System.out.print("기존제목: ");
+					String pretitle = boardArray[MaxNumber-number][1];
+					System.out.println(pretitle);
+					System.out.print("수정제목: ");
+					s = scanner.nextLine();
+					System.out.println(s);
+					// 바로 엔터 누른거 아니면 해당내용으로 수정
+					if(s.equals(""))
+					{
+						boardArray[MaxNumber-number][1] = pretitle;
+					}
+					else
+					{
+						boardArray[MaxNumber-number][1] = s;
+					}
+					
+					System.out.print("기존내용: ");
+					String precontent = boardArray[MaxNumber-number][2];
+					System.out.println(precontent);
+					System.out.print("수정내용: ");
+					s = scanner.nextLine();
+					// 바로 엔터 누른거 아니면 해당내용으로 수정
+					if(s.equals(""))
+					{
+						boardArray[MaxNumber-number][2] = precontent;
+					}
+					else
+					{
+						boardArray[MaxNumber-number][2] = s;
+					}
 				}
 				
-				System.out.print("기존내용: ");
-				String precontent = boardArray[MaxNumber-number][2];
-				System.out.println(precontent);
-				System.out.print("수정내용: ");
-				s = scanner.nextLine();
-				// 바로 엔터 누른거 아니면 해당내용으로 수정
-				if(s.equals(""))
-				{
-					boardArray[MaxNumber-number][2] = precontent;
-				}
-				else
-				{
-					boardArray[MaxNumber-number][2] = s;
-				}
 				
 				// 메뉴로
+				System.out.println("메뉴로 가시려면 엔터를 눌러주세요.");
 				s = scanner.nextLine();
 				if(s.equals("\n"))
 				{
@@ -143,11 +180,22 @@ public class OhWonjae {
 				System.out.print("번호 ");
 				s = scanner.nextLine();
 				number = Integer.parseInt(s);
-				for(int i=0; i<boardArray[0].length; i++)
+				// 잘못된 넘버 
+				if(number<0 || number >99 ||boardArray[MaxNumber-number][0]==null )
 				{
-					boardArray[MaxNumber-number][i] = null;
+					System.out.println("잘못된 숫자이거나 해당 번호의 게시물이 존재하지 않습니다.");
+				}
+				// 제대로된 넘버면
+				else
+				{
+					// 삭제
+					for(int i=0; i<boardArray[0].length; i++)
+					{
+						boardArray[MaxNumber-number][i] = null;
+					}
 				}
 				// 메뉴로
+				System.out.println("메뉴로 가시려면 엔터를 눌러주세요.");
 				s = scanner.nextLine();
 				if(s.equals("\n"))
 				{
@@ -155,7 +203,7 @@ public class OhWonjae {
 				}
 				break;
 			case 6:
-				System.out.println("종료");
+				System.out.println("종료합니다");
 				return;
 			}
 		}

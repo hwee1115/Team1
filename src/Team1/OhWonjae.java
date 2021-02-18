@@ -1,6 +1,6 @@
 package Team1;
 import java.util.Scanner;
-public class homework1 {
+public class OhWonjae {
 
 	public static void main(String[] args) {
 		boolean run = true;

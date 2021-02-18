@@ -19,6 +19,7 @@ public class KimMyungHwi {
 			int choiceNum =Integer.parseInt(scanner.nextLine());
 			if(choiceNum==1) {
 				System.out.println("--------------------------");
+				System.out.println();
 			}
 		}
 	}
